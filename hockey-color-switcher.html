@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <style>
+            .form-control {
+                font-size:2em;
+            }
+
+            .hidden {
+                display:none;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div id="setup" class="row p-4">
+            <div class="col-sm-12"><h1 class="">Select Hat Colors</h1></div>
+            <div class="col-sm-12">
+                <button type="button" class="color-selector btn btn-outline-primary btn-lg  p-5 col-sm-6 col-md-3 col-lg-2" data-color="primary"  data-toggle="button">Blue</button>
+                <button type="button" class="color-selector btn btn-outline-success btn-lg  p-5 col-sm-6 col-md-3 col-lg-2" data-color="success" data-toggle="button">Green</button>
+                <button type="button" class="color-selector btn btn-outline-warning btn-lg  p-5 col-sm-6 col-md-3 col-lg-2" data-color="warning" data-toggle="button">Orange</button>
+                <button type="button" class="color-selector btn btn-outline-info btn-lg  p-5 col-sm-6 col-md-3 col-lg-2" data-color="info" data-toggle="button">Teal</button>
+                <button type="button" class="color-selector btn btn-outline-danger btn-lg  p-5 col-sm-6 col-md-3 col-lg-2" data-color="danger" data-toggle="button">Red</button>
+                <button type="button" class="color-selector btn btn-outline-dark btn-lg p-5 col-sm-6 col-md-3 col-lg-2" data-color="dark" data-toggle="button">Dark</button>
+            </div>
+            <div class="col-sm-12 p-2"></div>
+            <div class="col-sm-12"><h1 class="">Select Change Interval in seconds</h1></div>            
+            <div class="col-sm-12">
+                <input type="text" class="form-control input-lg" id="time-interval" placeholder="5" value="1">
+            </div>
+            <div class="col-sm-12 mt-3"><button type="button" class="btn btn-success btn-lg btn-block" id="start-button">START</button></div>
+        </div>
+
+        <div id="output" class="row p-4 hidden">
+            <div class="col-sm-12"><button type="button" class="btn btn-outline-danger btn-lg btn-block" id="stop-button">STOP</button></div>
+            <div class="col-sm-12">
+                <div id="the-tile" class="jumbotron container-fluid bg-dark" style="min-height: 1000px">
+                    
+                </div>
+            </div>            
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
+        <script>
+            
+            var theInterval = undefined;
+
+            function getRandomInt(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            $(document).ready(function() {
+                $(".color-selector").click(function(e){
+                    e.preventDefault();
+                    var item = $(this);
+                    if (item.hasClass("active")) {
+                        item.removeClass("active");
+                    }
+                    else {
+                        item.addClass("active");
+                    }
+                });
+
+                $("#start-button").click(function(e){
+                    e.preventDefault();
+                    if (typeof(theInterval) !== "undefined") clearInterval(theInterval);                    
+
+                    $("#setup").addClass("hidden");
+                    $("#output").removeClass("hidden");
+
+                    var colors = $.map($(".color-selector.active"), function(a, b){
+                        return $(a).attr("data-color");
+                    });
+                    var upperLimit = colors.length;
+                    var timeForItterations = $("#time-interval").val()*1000;
+                    
+                    theInterval = setInterval(function(e) {
+                        var randomColor = getRandomInt(1, upperLimit)-1;
+                        $('#the-tile').attr('class', function(i, c){
+                            return c.replace(/(^|\s)bg-\S+/g, ' bg-'+colors[randomColor]);
+                        });
+                    },timeForItterations);
+
+                });
+
+                $("#stop-button").click(function(e){
+                    e.preventDefault();
+                    if (typeof(theInterval) !== "undefined") clearInterval(theInterval);
+                    $("#setup").removeClass("hidden");
+                    $("#output").addClass("hidden");                    
+                });
+
+            });
+
+        </script>
+    </body>
+</html>

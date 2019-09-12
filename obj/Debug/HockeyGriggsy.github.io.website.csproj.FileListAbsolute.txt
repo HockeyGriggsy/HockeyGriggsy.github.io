@@ -1,0 +1,5 @@
+C:\Source\HockeyGriggsy.github.io\obj\Debug\HockeyGriggsy.github.io.website.csprojResolveAssemblyReference.cache
+C:\Source\HockeyGriggsy.github.io\bin\Debug\HockeyGriggsy.github.io.website.dll
+C:\Source\HockeyGriggsy.github.io\bin\Debug\HockeyGriggsy.github.io.website.pdb
+C:\Source\HockeyGriggsy.github.io\obj\Debug\HockeyGriggsy.github.io.website.dll
+C:\Source\HockeyGriggsy.github.io\obj\Debug\HockeyGriggsy.github.io.website.pdb
